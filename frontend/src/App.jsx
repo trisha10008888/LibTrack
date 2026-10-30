@@ -145,6 +145,17 @@ function App() {
           request.id === requestId ? updatedRequest : request
         )
       )
+
+      // Keep the catalogue availability in sync with the backend response.
+      if (updatedRequest.book) {
+        setBooks((previous) =>
+          previous.map((book) =>
+            book.id === updatedRequest.book.id
+              ? { ...book, available: updatedRequest.book.available }
+              : book
+          )
+        )
+      }
     } catch (err) {
       console.error(err)
       alert(err.message || 'Unable to update request.')
